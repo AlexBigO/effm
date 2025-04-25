@@ -165,7 +165,7 @@ class FormMaker:
                 file.write(student.feedback_form)
             if compile_tex:
                 os.system(
-                    f"pdflatex -output-directory={self.outdir} {name_out_file}.tex"
+                    f"pdflatex -halt-on-error -output-directory={self.outdir} {name_out_file}.tex"
                     f" > {self.outdir}log"
                 )
                 if self.remove_log:
@@ -180,7 +180,7 @@ class FormMaker:
             file.write(self.classe_feedback_form)
         if compile_tex:
             os.system(
-                f"pdflatex -output-directory={self.outdir} {name_out_file}_WoAbsent.tex"
+                f"pdflatex -halt-on-error -output-directory={self.outdir} {name_out_file}_WoAbsent.tex"
                 f" > {self.outdir}log"
             )
             if self.remove_log:
@@ -191,7 +191,7 @@ class FormMaker:
             file.write(self.classe_feedback_form_w_absent)
         if compile_tex:
             os.system(
-                f"pdflatex -output-directory={self.outdir} {name_out_file}_All.tex"
+                f"pdflatex -halt-on-error -output-directory={self.outdir} {name_out_file}_All.tex"
                 f" > {self.outdir}log"
             )
             if self.remove_log:
