@@ -3,10 +3,10 @@
 #-----------------------------
 Input:
   labels: ["Numéro", "Nom", "Prénom"]  # mabels of the 'default' columns in the output file
-  n_students: 2  # possible values: null, int
+  n_students: 4  # possible values: null, int (overdriven if input_from_file activated)
   import_from_file:
-    activate: false  # possible values: true, false
-    name_file: test_input.xlsx  # name of the input file
+    activate: true  # possible values: true, false
+    name_file: classe_list.xlsx  # name of the input file
     name_sheet: Classe  # name of the sheet where information is taken
     name_cols: ["Numéro", "Nom", "Prénom"]  # name of the columns to import from input file
 

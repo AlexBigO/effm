@@ -152,10 +152,7 @@ class Student:
         """
         Helper method to get the rank of the student
         """
-        # remove duplicates
-        # print("Grades for rank:")
-        # print(list(set(grades_classe)))
-        # print("\n")
+        # extra safety to remove nan
         grades_classe_wo_dupli = pd.Series(list(set(grades_classe))).dropna().values
         # sort this list
         sorted_grades_classe_wo_dupli = sorted(grades_classe_wo_dupli, reverse=True)

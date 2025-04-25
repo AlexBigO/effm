@@ -77,7 +77,8 @@ class FormMaker:
         ):
 
             student.set_grade(row_grade[self.label_grade_col])
-            student.set_rank(self.df[self.name_sheet_grades][self.label_grade_col])
+            if not student.absent:
+                student.set_rank(self.df[self.name_sheet_grades][self.label_grade_col])
             for column in self.columns_grading_scheme:
                 id_question = column.split("(")[0]
                 if id_question[-1] == " ":
@@ -164,11 +165,12 @@ class FormMaker:
                 file.write(student.feedback_form)
             if compile_tex:
                 os.system(
-                    f"pdflatex -output-directory={self.outdir} {name_out_file}.tex"
+                    f"pdflatex -halt-on-error -output-directory={self.outdir} {name_out_file}.tex"
                     f" > {self.outdir}log"
                 )
                 if self.remove_log:
                     os.system(f"rm {name_out_file}.aux {name_out_file}.log")
+                    os.system(f"rm {self.outdir}log")
 
         # for the whole classe (for present students)
         name_out_file = f"{self.outdir}00{self.exam.classe}".replace(" ", "_")
@@ -178,21 +180,23 @@ class FormMaker:
             file.write(self.classe_feedback_form)
         if compile_tex:
             os.system(
-                f"pdflatex -output-directory={self.outdir} {name_out_file}_WoAbsent.tex"
-                f" > {self.outdir}log"
+                f"pdflatex -halt-on-error -output-directory={self.outdir} {name_out_file}"
+                f"_WoAbsent.tex > {self.outdir}log"
             )
             if self.remove_log:
                 os.system(f"rm {name_out_file}_WoAbsent.aux {name_out_file}_WoAbsent.log")
+                os.system(f"rm {self.outdir}log")
         # all forms
         with open(f"{name_out_file}_All.tex", "w", encoding="utf-8") as file:
             file.write(self.classe_feedback_form_w_absent)
         if compile_tex:
             os.system(
-                f"pdflatex -output-directory={self.outdir} {name_out_file}_All.tex"
+                f"pdflatex -halt-on-error -output-directory={self.outdir} {name_out_file}_All.tex"
                 f" > {self.outdir}log"
             )
             if self.remove_log:
                 os.system(f"rm {name_out_file}_All.aux {name_out_file}_All.log")
+                os.system(f"rm {self.outdir}log")
 
     def make(self, compile_tex=False):
         """

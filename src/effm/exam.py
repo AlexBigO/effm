@@ -206,7 +206,7 @@ class Exam:
         self.__set_copy_remarks_classe()
         self.__set_skills_classe()
 
-    def get_mean(self) -> np.float64:
+    def get_mean(self):
         """
         Helper method to get the mean of the exam grade
 
@@ -217,7 +217,7 @@ class Exam:
         """
         return np.mean([student.grade for student in self.students if not student.absent])
 
-    def get_std_dev(self) -> np.float64:
+    def get_std_dev(self):
         """
         Helper method to get the standard deviation of the exam grade
 
@@ -228,7 +228,7 @@ class Exam:
         """
         return np.std([student.grade for student in self.students if not student.absent])
 
-    def get_total_number_of_points(self) -> np.float64:
+    def get_total_number_of_points(self):
         """
         Helper method to get the total number of possible points in the exam
 

@@ -1,0 +1,11 @@
+Input:
+  name_file: filled_excel_file.xlsx
+Exam:
+  field: "Physique"
+  classe: "Licence"
+  name: "CC"
+  date: "jour/mois/annee"
+Output:
+  dir: "./output/"
+  suffix: "FeedbackForm"
+  rm_log: True  # delete log files (if LaTeX compilation activated)
