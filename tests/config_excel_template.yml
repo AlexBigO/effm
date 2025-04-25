@@ -1,0 +1,83 @@
+#-----------------------------
+#---- INPUT CONFIGURATION ----
+#-----------------------------
+Input:
+  labels: ["Numéro", "Nom", "Prénom"]
+  n_students: 2  # possible values: null, int
+  import_from_file:
+    activate: false  # possible values: true, false
+    name_file: test_input.xlsx
+    name_sheet: Classe
+    name_cols: ["Numéro", "Nom", "Prénom"]
+
+#------------------------------
+#---- OUTPUT CONFIGURATION ----
+#------------------------------
+
+name_outfile: excel_template.xlsx
+
+Sheets:
+  Classe: Classe  # name of the Classe sheet
+  Grades: Notes   # name of the Grades sheet
+  Remarks: Remarques  # name of the Remarks sheet
+  Copy: Copie  # name of the Copy sheet
+  Skills: Compétences  # name of the Skills sheet
+
+LabelGradeColumn: Note
+
+Levels: ["Non acquis", "En voie d'acquisition", "Acquis"]
+
+GradingScheme:
+  #question_label: possible points for this question
+  1.1: [0, 1]
+  1.2: [0, 1, 2]
+  1.3: [0, 0.5, 1, 1.5, 2]
+
+Remarks:
+  # dummy_key_for_the_remark:
+  #   label: <Put the actual remark here>
+  #   default: <Select a default value: True or False>
+  #   autofill:
+  #     activate: <Switch for the automatic fill: True or False>
+  #     questions: <Select a list of questions linked to this remark>
+  #     criteria: <Comparison to thershold value: '<' or '>' >
+  #     threshold: <Threshold value to switch on/off the remark>
+  remark1:
+    label: "Poursuivez vos efforts !"
+    default: False
+    autofill:
+      activate: True
+      questions: [1.2]  # TODO add a "enforce list in code in case there is only one question"
+      criteria: <
+      threshold: 0.5
+  remark2:
+    label: "Test"
+    default: null
+    autofill:
+      activate: False
+
+Copy:
+  comment1:
+    label: "Soin"
+    default: null
+  comment2:
+    label: "Mise en évidence des résultats"
+    default: null
+  comment3:
+    label: "Numérotation des pages"
+    default: "Acquis"
+
+Skills:
+  skill1:
+    label: "Skill number 1"
+    default: null
+    autofill:
+      activate: True
+      questions: [1.1 ,1.2]  # TODO add a "enforce list in code in case there is only one question"
+      thresholds: [0.4, 0.8]
+
+  skill2:
+    label: "Skill number 2"
+    default: "Non acquis"
+    autofill:
+      activate: False

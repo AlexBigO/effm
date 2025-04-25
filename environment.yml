@@ -1,0 +1,15 @@
+name: effm_env
+channels:
+  - conda-forge
+dependencies:
+  - python>=3.8
+  - pyyaml
+  - pandas
+  - numpy
+  - openpyxl
+  - xlsxwriter
+  - matplotlib
+  - pip
+  - pip:
+    - ttkbootstrap
+    - argparse

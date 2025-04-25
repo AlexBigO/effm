@@ -1,0 +1,27 @@
+[project]
+name = "effm"
+version = "0.0.1"
+authors = [{name="Alexandre Bigot", email="alexandrebigot57@gmail.com"}]
+description = "Exam Feedback Form Maker"
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers=[
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Education",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
+dependencies = [
+    "pandas>=1.7",
+    "pyyaml",
+    "numpy",
+    "xlsxwriter",
+    "openpyxl",
+    "matplotlib>=3.7.5",
+    "ttkbootstrap",
+    "argparse"
+]

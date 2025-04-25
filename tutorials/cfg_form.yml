@@ -1,0 +1,11 @@
+Input:
+  name_file: excel_template_for_test.xlsx #"/home/abigot/MyLectures/L2/Thermodynamique/CC2/FichesRetour/L2SPI Thermo CC2.xlsx"
+Exam:
+  field: "Physique"
+  classe: "Licence"
+  name: "CC"
+  date: "07/04/2025"
+Output:
+  dir: "/home/abigot/effm/tutorials/output/"
+  suffix: "FeedbackForm"
+  rm_log: True
