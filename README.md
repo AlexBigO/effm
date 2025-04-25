@@ -1,6 +1,8 @@
+<img src="./effm_logo.pdf" width="200" />
+
 # Introduction
 
-Exam Feedback Form Maker (effm) to create feedback forms for students after some examination.
+Exam Feedback Form Maker (effm) to create feedback forms for students after an exam.
 
 # Installation
 
@@ -79,7 +81,11 @@ One should follow the script `tutorials/make_forms.py` using **two** `yaml` conf
 
 ### Script
 
-One only needs to modify the configurables defined under `if __name__ == "__main__":` as shown in `tutorials/make_forms.py`.
+One only needs to modify the configurables defined under `if __name__ == "__main__":` as shown in `tutorials/make_forms.py`:
+- `NAME_EXCEL_CFG`: name of the configuration file used to produce the templated Excel file
+- `USE_GUI`: switch to activate GUI selection (or not)
+- `NAME_FORM_CFG`: name of the configuration file for feedback form generation
+- `COMPILE_TEX`: **very important** switch to enable automatic compilation of the produced .tex files to .pdf via `pdflatex`. *Advice: if pdf files are not produced, do not remove log files as they may contain information on some errors (e.g. if some text in the Excel file does not respect LaTeX syntax).*
 
 ### Configuration file
 
