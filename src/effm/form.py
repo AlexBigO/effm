@@ -77,7 +77,8 @@ class FormMaker:
         ):
 
             student.set_grade(row_grade[self.label_grade_col])
-            student.set_rank(self.df[self.name_sheet_grades][self.label_grade_col])
+            if not student.absent:
+                student.set_rank(self.df[self.name_sheet_grades][self.label_grade_col])
             for column in self.columns_grading_scheme:
                 id_question = column.split("(")[0]
                 if id_question[-1] == " ":
