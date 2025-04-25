@@ -5,7 +5,7 @@ Simple module to handle configurations
 try:
     import yaml
 except ModuleNotFoundError:
-    print("'yaml' is not installed. Please install it to use this module.")
+    print("'pyyaml' is not installed. Please install it to use this module.")
 
 
 class CommonConfig:
