@@ -7,13 +7,13 @@ from effm.data_handler import DataHandler
 from effm.form import FormMaker
 
 
-def make_forms(name_excel_cfg, name_form_cfg, compile_tex) -> None:
+def make_forms(name_excel_cfg, name_form_cfg, compile_tex, max_rank_shown) -> None:
     """
     Function to produce feeback forms
     """
     common_config = CommonConfig(name_excel_cfg)
     data = DataHandler(common_config, name_form_cfg)
-    forms = FormMaker(common_config, data, max_rank_shown=10)
+    forms = FormMaker(common_config, data, max_rank_shown)
     forms.make(compile_tex=compile_tex)
 
 
@@ -25,5 +25,6 @@ if __name__ == "__main__":
     USE_GUI: bool = False  # switch to use the GUI rather than the config file
     NAME_FORM_CFG: str = "config_form.yml" if not USE_GUI else str()
     COMPILE_TEX: bool = True  # switch to automatically compile .tex files via pdflatex
+    MAX_RANK_SHOWN: int = 10  # maximum rank shown on the forms, set to 0 to deactivate
     # Call the function
-    make_forms(NAME_EXCEL_CFG, NAME_FORM_CFG, COMPILE_TEX)
+    make_forms(NAME_EXCEL_CFG, NAME_FORM_CFG, COMPILE_TEX, MAX_RANK_SHOWN)
