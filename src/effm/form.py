@@ -180,8 +180,8 @@ class FormMaker:
             file.write(self.classe_feedback_form)
         if compile_tex:
             os.system(
-                f"pdflatex -halt-on-error -output-directory={self.outdir} {name_out_file}_WoAbsent.tex"
-                f" > {self.outdir}log"
+                f"pdflatex -halt-on-error -output-directory={self.outdir} {name_out_file}"
+                f"_WoAbsent.tex > {self.outdir}log"
             )
             if self.remove_log:
                 os.system(f"rm {name_out_file}_WoAbsent.aux {name_out_file}_WoAbsent.log")
