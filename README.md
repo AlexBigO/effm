@@ -85,10 +85,22 @@ One only needs to modify the configurables defined under `if __name__ == "__main
 - `NAME_EXCEL_CFG`: name of the configuration file used to produce the templated Excel file
 - `USE_GUI`: switch to activate GUI selection (or not)
 - `NAME_FORM_CFG`: name of the configuration file for feedback form generation
-- `COMPILE_TEX`: **very important** switch to enable automatic compilation of the produced .tex files to .pdf via `pdflatex`. *Advice: if pdf files are not produced, do not remove log files as they may contain information on some errors (e.g. if some text in the Excel file does not respect LaTeX syntax).*
+- `COMPILE_TEX`: **very important** switch to enable automatic compilation of the produced .tex files to .pdf via `pdflatex`.
+*Advice 1: if pdf files are not produced, do not remove log files as they may contain information on some errors (e.g. if some text in the Excel file does not respect LaTeX syntax).*
+*Advice 2: one could also switch off this functionality and copy-paste the output folder into an Overleaf project, that shall be then compiled.*
+- `MAX_RANK_SHOWN`: maximum rank shown on the forms, set to 0 to deactivate
 
 ### Configuration file
 
 *This file is optional and can be replaced by dynamic selecting via GUI, as mentioned before.*
 
 All the elements are documented inside the example `tutorials/config_form.yml` example file.
+
+### What is actually produced
+
+For a given exam and a given classe, feedback forms are generated (in .tex format and .pdf format if LaTeX compilation is enabled):
+- an individual form for each student (one file per student)
+- all the forms in a single file:
+    - with all students
+    - without absent students
+    - with all students but anonymously (only the student number appears, not the name)

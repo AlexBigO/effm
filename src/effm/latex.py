@@ -9,7 +9,7 @@ class LaTeXOutput:
     Class to format the LaTeX output to be compiled with pdflatex
     """
 
-    def __init__(self, exam, student, outdir, max_rank_shown) -> None:
+    def __init__(self, exam, student, outdir, max_rank_shown, anonymous=False) -> None:
         """
         Init method
         """
@@ -25,6 +25,7 @@ class LaTeXOutput:
         self.skills: str = str()
 
         self.max_rank_shown: int = max_rank_shown
+        self.anonymous: bool = anonymous
 
     def get_preamble(self) -> str:
         """
@@ -74,9 +75,11 @@ class LaTeXOutput:
             The header of the .tex document environment
         """
         all_points = self.exam.get_total_number_of_points()
-        header = (
-            f"\\noindent\\begin{{minipage}}[c]{{0.31\\linewidth}}\\noindent {self.student.name}"
-        )
+        header = "\\noindent\\begin{minipage}[c]{0.31\\linewidth}\\noindent"
+        if self.anonymous:
+            header += f" N$^{{\\circ}}$ étudiant: {self.student.number}"
+        else:
+            header += f" {self.student.name}"
         header += "\\end{minipage}\\hfill\n"
         header += f"\\begin{{minipage}}[c]{{0.31\\linewidth}}\\centering {self.exam.date}"
         header += " \\end{minipage}\\hfill\n"
@@ -84,7 +87,10 @@ class LaTeXOutput:
         header += " \\end{minipage}\\hfill\n"
         header += "\n"
         header += "\\noindent\\begin{minipage}[c]{0.31\\linewidth}"
-        header += f"\\noindent {self.student.firstname}"
+        if self.anonymous:
+            header += " "
+        else:
+            header += f"\\noindent {self.student.firstname}"
         header += "\\end{minipage}\\hfill\n"
         header += "\\begin{minipage}[c]{0.31\\linewidth}\\hfill"
         header += f"({self.exam.n_present_students} étudiants)"
