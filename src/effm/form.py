@@ -169,6 +169,7 @@ class FormMaker:
                 )
                 if self.remove_log:
                     os.system(f"rm {name_out_file}.aux {name_out_file}.log")
+                    os.system(f"rm {self.outdir}log")
 
         # for the whole classe (for present students)
         name_out_file = f"{self.outdir}00{self.exam.classe}".replace(" ", "_")
@@ -183,6 +184,7 @@ class FormMaker:
             )
             if self.remove_log:
                 os.system(f"rm {name_out_file}_WoAbsent.aux {name_out_file}_WoAbsent.log")
+                os.system(f"rm {self.outdir}log")
         # all forms
         with open(f"{name_out_file}_All.tex", "w", encoding="utf-8") as file:
             file.write(self.classe_feedback_form_w_absent)
@@ -193,6 +195,7 @@ class FormMaker:
             )
             if self.remove_log:
                 os.system(f"rm {name_out_file}_All.aux {name_out_file}_All.log")
+                os.system(f"rm {self.outdir}log")
 
     def make(self, compile_tex=False):
         """
