@@ -26,6 +26,9 @@ class FormMaker:
         data.create_output_dir()
         self.outdir, self.outfile_suffix, self.remove_log = data.get_output_config().values()
 
+        # get names of default columns
+        self.labels_default_cols = common_config.get_labels()
+        self.labels_default_cols.append("Absence")  # add Absence column
         # get name of the column containing the total grade
         self.label_grade_col = common_config.get_label_grade_column()
         # get sheets names
@@ -66,7 +69,8 @@ class FormMaker:
         Helper method to set the students information
         """
         for _, row in self.df[self.name_sheet_classe].iterrows():
-            self.students.append(Student(row["Numéro"], row["Nom"], row["Prénom"], row["Absence"]))
+            rows = [row[label] for label in self.labels_default_cols]
+            self.students.append(Student(*rows))
         # import the remaining pieces of information (grades, remarks, skills)
         for student, (_, row_grade), (_, row_remark), (_, row_copy), (_, row_skill) in zip(
             self.students,
