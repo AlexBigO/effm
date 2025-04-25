@@ -1,4 +1,4 @@
-<img src="./effm_logo.pdf" width="200" />
+<img src="./effm_logo.jpg" width="200" />
 
 # Introduction
 
