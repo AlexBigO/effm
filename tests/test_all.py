@@ -27,10 +27,9 @@ def make_forms(name_excel_cfg, name_form_cfg, compile_tex) -> None:
 
 
 if __name__ == "__main__":
-    NAME_EXCEL_CFG: str = "../tests/config_excel_template.yml"
-    # make_excel_template(NAME_EXCEL_CFG)
+    NAME_EXCEL_CFG: str = "config_excel_template.yml"
 
     USE_GUI: bool = False
-    NAME_FORM_CFG: str = "cfg_form.yml" if not USE_GUI else str()
+    NAME_FORM_CFG: str = "config_form.yml" if not USE_GUI else str()
     COMPILE_TEX: bool = True
     make_forms(NAME_EXCEL_CFG, NAME_FORM_CFG, COMPILE_TEX)

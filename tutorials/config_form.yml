@@ -1,0 +1,11 @@
+Input:
+  name_file: filled_excel_file.xlsx  # name of the input file
+Exam:  # caracteristics of the exam to be shown in the header of the forms
+  field: "Physique"
+  classe: "Licence"
+  name: "CC"
+  date: "jour/mois/annee"
+Output:
+  dir: "./output/"  # output directory (will be created if not already existing)
+  suffix: "FeedbackForm"  # suffix to all files produced
+  rm_log: True  # delete log files (if LaTeX compilation activated)
