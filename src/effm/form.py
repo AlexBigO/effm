@@ -50,6 +50,7 @@ class FormMaker:
         self.students = []
         self.classe_feedback_form = str()
         self.classe_feedback_form_w_absent = str()
+        self.classe_feedback_form_anonymous = str()
         self.max_rank_shown = max_rank_shown
 
     def set_grading_scheme(self):
@@ -104,8 +105,21 @@ class FormMaker:
         Helper method to set the feedback forms
         """
         for i, student in enumerate(self.students):
+            # produce graphs
             if not student.absent:
                 student.plot_grade_stats(self.exam, self.outdir)
+            # first generate anonymous form for the whole class and save them in string variable
+            anonymous_latex_output = LaTeXOutput(
+                self.exam, student, self.outdir, self.max_rank_shown, anonymous=True
+            )
+            student.set_feedback_form(anonymous_latex_output.get_student_tex())
+            if i == 0:
+                self.classe_feedback_form_anonymous += anonymous_latex_output.get_preamble()
+                self.classe_feedback_form_anonymous += "\n\\begin{document}\n\n"
+            self.classe_feedback_form_anonymous += anonymous_latex_output.get_student_page()
+            self.classe_feedback_form_anonymous += "\\newpage\n"
+        # set the actual 'non-anonymous' forms
+        for i, student in enumerate(self.students):
             latex_output = LaTeXOutput(self.exam, student, self.outdir, self.max_rank_shown)
             student.set_feedback_form(latex_output.get_student_tex())
             # for the whole classe now
@@ -119,11 +133,13 @@ class FormMaker:
             if i == 0:
                 self.classe_feedback_form_w_absent += latex_output.get_preamble()
                 self.classe_feedback_form_w_absent += "\n\\begin{document}\n\n"
+
             self.classe_feedback_form_w_absent += latex_output.get_student_page()
             self.classe_feedback_form_w_absent += "\\newpage\n"
 
         self.classe_feedback_form += "\n\\end{document}"
         self.classe_feedback_form_w_absent += "\n\\end{document}"
+        self.classe_feedback_form_anonymous += "\n\\end{document}"
 
     def add_average_student(self):
         """
@@ -200,6 +216,18 @@ class FormMaker:
             )
             if self.remove_log:
                 os.system(f"rm {name_out_file}_All.aux {name_out_file}_All.log")
+                os.system(f"rm {self.outdir}log")
+        # anonymous forms
+        with open(f"{name_out_file}_Anonymous.tex", "w", encoding="utf-8") as file:
+            file.write(self.classe_feedback_form_anonymous)
+        if compile_tex:
+            os.system(
+                f"pdflatex -halt-on-error -output-directory={self.outdir} {name_out_file}"
+                "_Anonymous.tex"
+                f" > {self.outdir}log"
+            )
+            if self.remove_log:
+                os.system(f"rm {name_out_file}_Anonymous.aux {name_out_file}_Anonymous.log")
                 os.system(f"rm {self.outdir}log")
 
     def make(self, compile_tex=False):
