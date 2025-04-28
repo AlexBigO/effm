@@ -9,7 +9,10 @@ class LaTeXOutput:
     Class to format the LaTeX output to be compiled with pdflatex
     """
 
-    def __init__(self, exam, student, outdir, max_rank_shown, anonymous=False) -> None:
+    # pylint: disable=too-many-arguments, too-many-positional-arguments
+    def __init__(
+        self, exam, student, outdir: str, max_rank_shown: int, anonymous: bool = False
+    ) -> None:
         """
         Init method
         """
@@ -49,7 +52,7 @@ class LaTeXOutput:
         preamble += "\\definecolor{DarkOrange}{rgb}{1.0, 0.55, 0.0}\n"
         return preamble
 
-    def str_grade(self):
+    def str_grade(self) -> str:
         """
         Helper method to show the grade with the at most two numbers after the comma
 
@@ -65,7 +68,7 @@ class LaTeXOutput:
             return _str_grade[:-1]
         return _str_grade
 
-    def __header(self):
+    def __header(self) -> str:
         """
         Helper method to set header
 
@@ -114,7 +117,7 @@ class LaTeXOutput:
 
         return header
 
-    def __grade_details(self):
+    def __grade_details(self) -> str:
         """
         Helper method to set grade details
 
@@ -149,7 +152,7 @@ class LaTeXOutput:
             return "\\xspace\\color{DarkOrange}\\faMehO\\color{black}"
         return "\\xspace\\color{DarkRed}\\faFrownO\\color{black}"
 
-    def __remarks(self):
+    def __remarks(self) -> str:
         """
         Helper method to set general remarks
 
@@ -172,7 +175,7 @@ class LaTeXOutput:
                 remarks += f"$\\triangleright$\\xspace {remark}\n\n"
         return remarks
 
-    def __copy_remarks(self):
+    def __copy_remarks(self) -> str:
         """
         Helper method to set remarks about the copy
 
@@ -192,7 +195,7 @@ class LaTeXOutput:
         remarks += "\n\\end{center}\n\n"
         return remarks
 
-    def __skills(self):
+    def __skills(self) -> str:
         """
         Helper method to set skills
 
@@ -225,7 +228,7 @@ class LaTeXOutput:
 
         return text
 
-    def get_student_page(self):
+    def get_student_page(self) -> str:
         """
         Helper method to get the tex page (w/o preamble nor \\end{document}) for a given student
 
@@ -249,25 +252,9 @@ class LaTeXOutput:
 
         return tex
 
-    def get_student_tex(self):
+    def get_student_tex(self) -> str:
         """
         Helper method to get the output tex file content for a given student
-
-        Returns
-        ------------------------------------------------
-        - tex: str
-            The whole .tex file content
-        """
-        tex = self.get_preamble()
-        tex += "\n\\begin{document}\n\n"
-        tex += self.get_student_page()
-        tex += "\n\\end{document}"
-
-        return tex
-
-    def get_exam_tex(self):
-        """
-        Helper method to get the output tex file content for the exam
 
         Returns
         ------------------------------------------------

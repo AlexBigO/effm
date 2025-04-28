@@ -2,21 +2,23 @@
 Module to produce a template of Excel file based on a (default) configuration
 """
 
+from effm.utils import Logger
+
 try:
     import pandas as pd
 except ModuleNotFoundError:
-    print("'pandas' is not installed. Please install it to use this module.")
+    Logger("'pandas' is not installed. Please install it to use this module.", "FATAL")
 
 try:
     import yaml
 except ModuleNotFoundError:
-    print("'yaml' is not installed. Please install it to use this module.")
+    Logger("'yaml' is not installed. Please install it to use this module.", "FATAL")
 
 # pylint:disable=import-error
 try:
     from xlsxwriter.utility import xl_rowcol_to_cell
 except ModuleNotFoundError:
-    print("'xlsxwriter' is not installed. Please install it to use this module.")
+    Logger("'xlsxwriter' is not installed. Please install it to use this module.", "FATAL")
 
 
 WIDTH_COL: int = 20
@@ -74,63 +76,63 @@ class ExcelTemplate:
         """
 
         if not isinstance(self.config["Input"]["labels"], list):
-            print("The 'labels' entry in 'Input' must be a list!")
+            Logger("The 'labels' entry in 'Input' must be a list!", "FATAL")
 
         if not isinstance(self.n_students, int):
-            print("The 'n_students' entry must ba a positive int if not null!")
+            Logger("The 'n_students' entry must ba a positive int if not null!", "FATAL")
         if self.n_students < 0:
-            print("The 'n_students' entry must ba a positive int if not null!")
+            Logger("The 'n_students' entry must ba a positive int if not null!", "FATAL")
 
         if not isinstance(self.config["Input"]["import_from_file"]["name_cols"], list):
-            print("The 'name_cols' entry in 'Input' must be a list!")
+            Logger("The 'name_cols' entry in 'Input' must be a list!", "FATAL")
 
         if not isinstance(self.levels, list):
-            print("The 'Levels' entry must be a list!")
+            Logger("The 'Levels' entry must be a list!", "FATAL")
         if len(self.levels) != len(COLORS_LEVEL):
-            print("The 'Levels' entry must be a list of length 3!")
+            Logger("The 'Levels' entry must be a list of length 3!", "FATAL")
 
         for _, scheme in self.config["GradingScheme"].items():
             if not isinstance(scheme, list):
-                print("The grading scheme for a given question must be a list!")
+                Logger("The grading scheme for a given question must be a list!", "FATAL")
 
         for _, remark in self.config["Remarks"].items():
             if remark["default"] is not None:
                 if not isinstance(remark["default"], bool):
-                    print("The default value of a remark must be a boolean of null!")
+                    Logger("The default value of a remark must be a boolean of null!", "FATAL")
             if remark["autofill"]["activate"]:
                 if not isinstance(remark["autofill"]["questions"], list):
-                    print("The 'questions' entry in 'Remarks: autofill' must be a list!")
-                if remark["autofill"]["criteria"] not in [
-                    "<",
-                    "<=",
-                    ">",
-                    ">=",
-                ]:
-                    print(
+                    Logger("The 'questions' entry in 'Remarks: autofill' must be a list!", "FATAL")
+                if remark["autofill"]["criteria"] not in ["<", "<=", ">", ">="]:
+                    Logger(
                         "The 'criteria' entry in 'Remarks: autofill' must be chosen among:"
-                        "<, <=, > or >="
+                        "<, <=, > or >=",
+                        "FATAL",
                     )
                 if not 0 <= remark["autofill"]["threshold"] <= 1:
-                    print("The 'threshold' entry in 'Remarks: autofill' must be between 0 and 1!")
+                    Logger(
+                        "The 'threshold' entry in 'Remarks: autofill' must be between 0 and 1!",
+                        "FATAL",
+                    )
 
         for _, comment in self.config["Copy"].items():
             if comment["default"] is not None:
                 if comment["default"] not in self.levels:
-                    print("The default value of a copy comment must be in 'Levels'!")
+                    Logger("The default value of a copy comment must be in 'Levels'!", "FATAL")
 
         for _, skill in self.config["Skills"].items():
             if skill["default"] is not None:
                 if skill["default"] not in self.levels:
-                    print("The default value of a skill must be in 'Levels'!")
+                    Logger("The default value of a skill must be in 'Levels'!", "FATAL")
             if skill["autofill"]["activate"]:
                 if not isinstance(skill["autofill"]["questions"], list):
-                    print("The 'questions' entry in 'Skills: autofill' must be a list!")
+                    Logger("The 'questions' entry in 'Skills: autofill' must be a list!", "FATAL")
                 if not isinstance(skill["autofill"]["thresholds"], list):
-                    print("The 'thresholds' entry in 'Skills: autofill' must be a list!")
+                    Logger("The 'thresholds' entry in 'Skills: autofill' must be a list!", "FATAL")
                 if len(skill["autofill"]["thresholds"]) != len(self.levels) - 1:
-                    print(
+                    Logger(
                         "The length of the 'thresholds' entry in 'Skills: autofill'"
-                        + "must be equal to the length of 'Levels' minus one!"
+                        "must be equal to the length of 'Levels' minus one!",
+                        "FATAL",
                     )
 
     def __get_df_default(self) -> pd.DataFrame:
